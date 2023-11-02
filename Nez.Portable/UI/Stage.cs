@@ -448,16 +448,16 @@ namespace Nez.UI
 			IGamepadFocusable nextElement = null;
 			var direction = Direction.None;
 			if (Input.GamePads[0].DpadLeftPressed || Input.GamePads[0].IsLeftStickLeftPressed() ||
-				(KeyboardEmulatesGamepad && Input.IsKeyPressed(Keys.Left)))
+				(KeyboardEmulatesGamepad && Input.IsKeyPressed(Keys.A)))
 				direction = Direction.Left;
 			else if (Input.GamePads[0].DpadRightPressed || Input.GamePads[0].IsLeftStickRightPressed() ||
-					 (KeyboardEmulatesGamepad && Input.IsKeyPressed(Keys.Right)))
+					 (KeyboardEmulatesGamepad && Input.IsKeyPressed(Keys.D)))
 				direction = Direction.Right;
 			else if (Input.GamePads[0].DpadUpPressed || Input.GamePads[0].IsLeftStickUpPressed() ||
-					 (KeyboardEmulatesGamepad && Input.IsKeyPressed(Keys.Up)))
+					 (KeyboardEmulatesGamepad && Input.IsKeyPressed(Keys.W)))
 				direction = Direction.Up;
 			else if (Input.GamePads[0].DpadDownPressed || Input.GamePads[0].IsLeftStickDownPressed() ||
-					 (KeyboardEmulatesGamepad && Input.IsKeyPressed(Keys.Down)))
+					 (KeyboardEmulatesGamepad && Input.IsKeyPressed(Keys.S)))
 				direction = Direction.Down;
 
 			// make sure we have a valid direction
