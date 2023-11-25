@@ -1,4 +1,4 @@
-<Project>	
+﻿<Project>	
 	<PropertyGroup>
 		<BaseIntermediateOutputPath>obj\$(MSBuildProjectName)</BaseIntermediateOutputPath>
 	</PropertyGroup>
@@ -35,14 +35,13 @@
 			<Link>Content\NezDefaultBMFont.xnb</Link>
 		</EmbeddedResource>
 	</ItemGroup>
-
-	<ItemGroup>
-		<ProjectReference Include="..\..\FNA\FNA.Core.csproj">
-		</ProjectReference>
-	</ItemGroup>
 	
 	<ItemGroup>
 		<PackageReference Include="System.Drawing.Common" Version="4.6.0" />
+	</ItemGroup>
+	
+	<ItemGroup>
+	  <ProjectReference Include="..\..\FNA\FNA.Core.csproj" />
 	</ItemGroup>
 	
 	<Import Sdk="Microsoft.NET.Sdk" Project="Sdk.targets" />
