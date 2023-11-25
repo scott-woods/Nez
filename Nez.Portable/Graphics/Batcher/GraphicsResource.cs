@@ -92,9 +92,9 @@ namespace Nez
 
 		void UpdateResourceReference(bool shouldAdd)
 		{
-			var method = shouldAdd ? "AddResourceReference" : "RemoveResourceReference";
-			var methodInfo = ReflectionUtils.GetMethodInfo(GraphicsDevice, method);
-			methodInfo.Invoke(GraphicsDevice, new object[] {_selfReference});
+			//var method = shouldAdd ? "AddResourceReference" : "RemoveResourceReference";
+			//var methodInfo = ReflectionUtils.GetMethodInfo(GraphicsDevice, method);
+			//methodInfo.Invoke(GraphicsDevice, new object[] {_selfReference});
 		}
 	}
 }
