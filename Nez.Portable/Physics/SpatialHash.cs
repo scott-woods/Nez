@@ -316,6 +316,8 @@ namespace Nez.Spatial
 
 			while (currentCell.X != lastCell.X || currentCell.Y != lastCell.Y)
 			{
+				var previousCell = currentCell;
+
 				if (tMaxX < tMaxY)
 				{
 					// HACK: ensures we never overshoot our values
@@ -330,6 +332,15 @@ namespace Nez.Spatial
 
 					// currentCell.Y += stepY;
 					tMaxY += tDeltaY;
+				}
+
+				//check if currentCell did not change and force change if necessary
+				if (currentCell == previousCell)
+				{
+					if (currentCell.X != lastCell.X)
+						currentCell.X += stepX != 0 ? stepX : (lastCell.X > currentCell.X ? 1 : -1);
+					else if (currentCell.Y != lastCell.Y)
+						currentCell.Y += stepY != 0 ? stepY : (lastCell.Y > currentCell.Y ? 1 : -1);
 				}
 
 				// Debug.log( $"cell: {currentCell.X}, {currentCell.Y}" );
