@@ -85,7 +85,7 @@ namespace Nez
 				var dest = _destRects[i];
 				dest.X += pos.X;
 				dest.Y += pos.Y;
-				batcher.Draw(Sprite, dest, Sprite.NinePatchRects[i], Color);
+				batcher.Draw(Sprite, dest, Sprite.NinePatchRects[i], Color, SpriteEffects);
 			}
 		}
 	}
