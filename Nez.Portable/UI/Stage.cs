@@ -31,6 +31,11 @@ namespace Nez.UI
 		/// </summary>
 		public Keys KeyboardActionKey = Keys.Enter;
 
+		/// <summary>
+		/// if true (default) action key/button will activate focused control. if false, action key/button does nothing
+		/// </summary>
+		public bool IsSelectionEnabled = true;
+
 		Group root;
 		public Camera Camera;
 		bool debugAll, debugUnderMouse, debugParentUnderMouse;
@@ -437,12 +442,15 @@ namespace Nez.UI
 		{
 			if (_gamepadFocusElement != null)
 			{
-				if (Input.GamePads[0].IsButtonPressed(GamepadActionButton) ||
+				if (IsSelectionEnabled)
+				{
+					if (Input.GamePads[0].IsButtonPressed(GamepadActionButton) ||
 					(KeyboardEmulatesGamepad && Input.IsKeyPressed(KeyboardActionKey)))
-					_gamepadFocusElement.OnActionButtonPressed();
-				else if (Input.GamePads[0].IsButtonReleased(GamepadActionButton) ||
-						 (KeyboardEmulatesGamepad && Input.IsKeyReleased(KeyboardActionKey)))
-					_gamepadFocusElement.OnActionButtonReleased();
+						_gamepadFocusElement.OnActionButtonPressed();
+					else if (Input.GamePads[0].IsButtonReleased(GamepadActionButton) ||
+							 (KeyboardEmulatesGamepad && Input.IsKeyReleased(KeyboardActionKey)))
+						_gamepadFocusElement.OnActionButtonReleased();
+				}
 			}
 
 			IGamepadFocusable nextElement = null;

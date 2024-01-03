@@ -61,9 +61,9 @@ namespace Nez
 		/// <returns>The game pad left stick.</returns>
 		/// <param name="gamepadIndex">Gamepad index.</param>
 		/// <param name="deadzone">Deadzone.</param>
-		public VirtualJoystick AddGamePadLeftStick(int gamepadIndex = 0, float deadzone = Input.DEFAULT_DEADZONE)
+		public VirtualJoystick AddGamePadLeftStick(int gamepadIndex = 0, float deadzone = Input.DEFAULT_DEADZONE, bool isInverted = true)
 		{
-			Nodes.Add(new GamePadLeftStick(gamepadIndex, deadzone));
+			Nodes.Add(new GamePadLeftStick(gamepadIndex, deadzone, isInverted));
 			return this;
 		}
 
@@ -131,16 +131,26 @@ namespace Nez
 		{
 			public int GamepadIndex;
 			public float Deadzone;
+			public bool IsVerticalInverted;
 
 
-			public GamePadLeftStick(int gamepadIndex = 0, float deadzone = Input.DEFAULT_DEADZONE)
+			public GamePadLeftStick(int gamepadIndex = 0, float deadzone = Input.DEFAULT_DEADZONE, bool isVerticalInverted = true)
 			{
 				GamepadIndex = gamepadIndex;
 				Deadzone = deadzone;
+				IsVerticalInverted = isVerticalInverted;
 			}
 
-
-			public override Vector2 Value => Input.GamePads[GamepadIndex].GetLeftStick(Deadzone);
+			public override Vector2 Value
+			{
+				get
+				{
+					var multiplier = IsVerticalInverted ? -1 : 1;
+					var value = Input.GamePads[GamepadIndex].GetLeftStick(Deadzone);
+					value.Y *= multiplier;
+					return value;
+				}
+			}
 		}
 
 
