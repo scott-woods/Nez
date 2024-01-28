@@ -77,7 +77,8 @@ namespace Nez
 			/// like the old TitleSafeArea. Example: if design resolution is 1348x900 and bleed is 148x140 the safe area would be 1200x760 (design
 			/// resolution - bleed).
 			/// </summary>
-			BestFit
+			BestFit,
+			LinearBleed
 		}
 
 
@@ -225,7 +226,7 @@ namespace Nez
 		{
 			_defaultDesignResolutionSize = new Point(width, height);
 			_defaultSceneResolutionPolicy = sceneResolutionPolicy;
-			if (_defaultSceneResolutionPolicy == SceneResolutionPolicy.BestFit)
+			if (_defaultSceneResolutionPolicy == SceneResolutionPolicy.BestFit || _defaultSceneResolutionPolicy == SceneResolutionPolicy.LinearBleed)
 				_defaultDesignBleedSize = new Point(horizontalBleed, verticalBleed);
 		}
 
@@ -687,6 +688,18 @@ namespace Nez
 
 					renderTargetWidth = designSize.X;
 					renderTargetHeight = designSize.Y;
+
+					break;
+				case SceneResolutionPolicy.LinearBleed:
+					var scale = screenSize / new Point(designSize.X - _designBleedSize.X, designSize.Y - _designBleedSize.Y);
+					renderTargetWidth = designSize.X;
+					renderTargetHeight = designSize.Y;
+
+					_finalRenderDestinationRect.Width = screenSize.X + (_designBleedSize.X * scale.X);
+					_finalRenderDestinationRect.Height = screenSize.Y + (_designBleedSize.Y * scale.Y);
+					_finalRenderDestinationRect.X = (screenSize.X - _finalRenderDestinationRect.Width) / 2;
+					_finalRenderDestinationRect.Y = (screenSize.Y - _finalRenderDestinationRect.Height) / 2;
+					rectCalculated = true;
 
 					break;
 			}
