@@ -1,6 +1,7 @@
 ﻿<Project>	
 	<PropertyGroup>
 		<BaseIntermediateOutputPath>obj\$(MSBuildProjectName)</BaseIntermediateOutputPath>
+		<Platforms>AnyCPU;x64</Platforms>
 	</PropertyGroup>
 	<Import Sdk="Microsoft.NET.Sdk" Project="Sdk.props" />
 
@@ -22,8 +23,16 @@
 		<DefineConstants>TRACE;DEBUG;FNA</DefineConstants>
 	</PropertyGroup>
 
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+	  <DefineConstants>TRACE;DEBUG;FNA</DefineConstants>
+	</PropertyGroup>
+
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
 		<DefineConstants>FNA</DefineConstants>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+	  <DefineConstants>FNA</DefineConstants>
 	</PropertyGroup>
 
     <ItemGroup>
