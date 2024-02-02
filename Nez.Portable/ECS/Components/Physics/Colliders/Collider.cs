@@ -330,8 +330,8 @@ namespace Nez
 			foreach (var neighbor in neighbors)
 			{
 				// skip triggers
-				if (neighbor.IsTrigger)
-					continue;
+				//if (neighbor.IsTrigger)
+				//	continue;
 
 				if (CollidesWith(neighbor, out result))
 					return true;
