@@ -166,7 +166,8 @@ namespace Nez.UI
 		/// <returns>The mouse position.</returns>
 		public virtual Vector2 GetMousePosition()
 		{
-			return Entity != null && !IsFullScreen ? Input.ScaledMousePosition : Input.RawMousePosition.ToVector2();
+			var scale = Scene.UIRenderTargetSize.ToVector2() / Screen.Size;
+			return Entity != null && !IsFullScreen ? Input.ScaledMousePosition * scale : Input.RawMousePosition.ToVector2() * scale;
 		}
 
 

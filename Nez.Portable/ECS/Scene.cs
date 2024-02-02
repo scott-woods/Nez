@@ -130,6 +130,8 @@ namespace Nez
 		public Point SceneRenderTargetSize =>
 			new Point(_sceneRenderTarget.Bounds.Width, _sceneRenderTarget.Bounds.Height);
 
+		public static Point UIRenderTargetSize;
+
 		/// <summary>
 		/// accesses the main scene RenderTarget. Some Renderers that use multiple RenderTargets may need to render into them first and then
 		/// render the result into the sceneRenderTarget.
@@ -556,6 +558,9 @@ namespace Nez
 			var resolutionScaleY = (float)screenSize.Y / (float)designSize.Y;
 
 			var rectCalculated = false;
+
+			if (UIRenderTargetSize.X == 0 && UIRenderTargetSize.Y == 0)
+				UIRenderTargetSize = new Point(screenSize.X, screenSize.Y);
 
 			// calculate the scale used by the PixelPerfect variants
 			PixelPerfectScale = 1;

@@ -1,6 +1,6 @@
 ﻿using Nez.UI;
 using Microsoft.Xna.Framework;
-
+using System;
 
 namespace Nez
 {
@@ -42,7 +42,6 @@ namespace Nez
 					(child as Window).KeepWithinStage();
 			}
 		}
-
 
 		public override void OnRemovedFromEntity()
 		{
