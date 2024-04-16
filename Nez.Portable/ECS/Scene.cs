@@ -366,6 +366,7 @@ namespace Nez
 
 			// now we can remove the Entities and finally the SceneComponents
 			Core.Emitter.RemoveObserver(CoreEvents.GraphicsDeviceReset, OnGraphicsDeviceReset);
+			Core.Emitter.RemoveObserver(CoreEvents.OrientationChanged, OnOrientationChanged);
 			Entities.RemoveAllEntities();
 
 			for (var i = 0; i < _sceneComponents.Length; i++)
@@ -993,14 +994,7 @@ namespace Nez
 		/// <param name="entity">The Entity to add</param>
 		public Entity AddEntity(Entity entity)
 		{
-			Insist.IsFalse(Entities.Contains(entity), "You are attempting to add the same entity to a scene twice: {0}", entity);
-			Entities.Add(entity);
-			entity.Scene = this;
-
-			for (var i = 0; i < entity.Transform.ChildCount; i++)
-				AddEntity(entity.Transform.GetChild(i).Entity);
-
-			return entity;
+			return AddEntity<Entity>(entity);
 		}
 
 		/// <summary>
@@ -1012,6 +1006,10 @@ namespace Nez
 			Insist.IsFalse(Entities.Contains(entity), "You are attempting to add the same entity to a scene twice: {0}", entity);
 			Entities.Add(entity);
 			entity.Scene = this;
+
+			for (var i = 0; i < entity.Transform.ChildCount; i++)
+				AddEntity<Entity>(entity.Transform.GetChild(i).Entity);
+			
 			return entity;
 		}
 
