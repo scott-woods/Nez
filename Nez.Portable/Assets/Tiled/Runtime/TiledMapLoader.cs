@@ -246,6 +246,61 @@ namespace Nez.Tiled
 			return terrain;
 		}
 
+		public static TmxTerrainSet ParseTmxTerrainSet(XElement xTerrainSet)
+		{
+			var terrainSet = new TmxTerrainSet();
+
+			terrainSet.Name = (string)xTerrainSet.Attribute("name");
+			terrainSet.Type = (string)xTerrainSet.Attribute("type");
+			terrainSet.Properties = ParsePropertyDict(xTerrainSet.Element("properties"));
+
+			var xTerrains = xTerrainSet.Elements("wangcolor").ToList();
+			if (xTerrains.Count > 0)
+			{
+				var terrains = new List<TmxWangTerrain>();
+
+				for (int i = 0; i < xTerrains.Count(); i++)
+				{
+					var xTerrain = xTerrains[i];
+
+					var terrain = new TmxWangTerrain();
+
+					terrain.Name = (string)xTerrain.Attribute("name");
+					terrain.Probability = (int)xTerrain.Attribute("probability");
+					terrain.Properties = ParsePropertyDict(xTerrain.Element("properties"));
+
+					terrains.Add(terrain);
+				}
+
+				terrainSet.Terrains = terrains;
+			}
+
+			var xTiles = xTerrainSet.Elements("wangtile").ToList();
+			if (xTiles.Count > 0)
+			{
+				var tiles = new List<TmxWangTile>();
+
+				for (int i = 0; i < xTiles.Count(); i++)
+				{
+					var xTile = xTiles[i];
+
+					var tile = new TmxWangTile();
+
+					tile.Name = "";
+					tile.TileId = (int)xTile.Attribute("tileid");
+
+					var wangIdString = (string)xTile.Attribute("wangid");
+					tile.WangId = wangIdString.Split(',').Select(x => Convert.ToInt32(x)).ToList();
+
+					tiles.Add(tile);
+				}
+
+				terrainSet.Tiles = tiles;
+			}
+
+			return terrainSet;
+		}
+
 		/// <summary>
 		/// parses all the layers in xEle putting them in the container
 		/// </summary>
@@ -635,12 +690,20 @@ namespace Nez.Tiled
 			if (xImage != null)
 				tileset.Image = new TmxImage().LoadTmxImage(xImage, tsxDir);
 
-			var xTerrainType = xTileset.Element("terraintypes");
-			if (xTerrainType != null)
+			//var xTerrainType = xTileset.Element("terraintypes");
+			//if (xTerrainType != null)
+			//{
+			//	tileset.Terrains = new TmxList<TmxTerrain>();
+			//	foreach (var e in xTerrainType.Elements("terrain"))
+			//		tileset.Terrains.Add(ParseTmxTerrain(e));
+			//}
+
+			var xTerrainSets = xTileset.Element("wangsets");
+			if (xTerrainSets != null)
 			{
-				tileset.Terrains = new TmxList<TmxTerrain>();
-				foreach (var e in xTerrainType.Elements("terrain"))
-					tileset.Terrains.Add(ParseTmxTerrain(e));
+				tileset.TerrainSets = new TmxList<TmxTerrainSet>();
+				foreach (var xSet in xTerrainSets.Elements("wangset"))
+					tileset.TerrainSets.Add(ParseTmxTerrainSet(xSet));
 			}
 
 			tileset.Tiles = new Dictionary<int, TmxTilesetTile>();

@@ -19,6 +19,7 @@ namespace Nez.Tiled
 		public Dictionary<string, string> Properties;
 		public TmxImage Image;
 		public TmxList<TmxTerrain> Terrains;
+		public TmxList<TmxTerrainSet> TerrainSets;
 
 		/// <summary>
 		/// cache of the source rectangles for each tile
@@ -44,5 +45,29 @@ namespace Nez.Tiled
 		public string Name { get; set; }
 		public int Tile;
 		public Dictionary<string, string> Properties;
+	}
+
+	public class TmxTerrainSet : ITmxElement
+	{
+		public string Name { get; set; }
+		public string Type { get; set; }
+		public int Tile;
+		public List<TmxWangTerrain> Terrains { get; set; }
+		public List<TmxWangTile> Tiles { get; set; }
+		public Dictionary<string, string> Properties;
+	}
+
+	public class TmxWangTerrain : ITmxElement
+	{
+		public string Name { get; set; }
+		public float Probability { get; set; }
+		public Dictionary<string, string> Properties;
+	}
+
+	public class TmxWangTile : ITmxElement
+	{
+		public string Name { get; set; }
+		public int TileId { get; set; }
+		public List<int> WangId { get; set; }
 	}
 }
