@@ -117,7 +117,7 @@ namespace Nez.Sprites
 				AnimationState = State.Completed;
 				_elapsedTime = 0;
 				CurrentFrame = 0;
-				Sprite = animation.Sprites[0];
+				//Sprite = animation.Sprites[0];
 				OnAnimationCompletedEvent?.Invoke(CurrentAnimationName);
 				return;
 			}
