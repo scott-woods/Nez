@@ -290,7 +290,18 @@ namespace Nez.Tiled
 					tile.TileId = (int)xTile.Attribute("tileid");
 
 					var wangIdString = (string)xTile.Attribute("wangid");
-					tile.WangId = wangIdString.Split(',').Select(x => Convert.ToInt32(x)).ToList();
+					tile.CornerTerrains = new Dictionary<string, string>();
+					var cornerValues = wangIdString.Split(',').Where((item, index) => index % 2 != 0).Select(i => Convert.ToInt32(i)).ToList();
+					List<string> corners = new List<string>() { "TopRight", "BottomRight", "BottomLeft", "TopLeft" };
+					for (int j = 0; j < cornerValues.Count; j++)
+					{
+						var corner = corners[j];
+						var terrainIndex = cornerValues[j];
+
+						var terrainValue = terrainIndex <= 0 ? "None" : terrainSet.Terrains[terrainIndex - 1].Name;
+
+						tile.CornerTerrains.Add(corner, terrainValue);
+					}
 
 					tiles.Add(tile);
 				}

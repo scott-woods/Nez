@@ -68,6 +68,6 @@ namespace Nez.Tiled
 	{
 		public string Name { get; set; }
 		public int TileId { get; set; }
-		public List<int> WangId { get; set; }
+		public Dictionary<string, string> CornerTerrains { get; set; }
 	}
 }
