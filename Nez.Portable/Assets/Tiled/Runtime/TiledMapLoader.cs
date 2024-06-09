@@ -286,22 +286,24 @@ namespace Nez.Tiled
 
 					var tile = new TmxWangTile();
 
-					tile.Name = "";
+					tile.Name = (string)xTile.Attribute("tileid");
 					tile.TileId = (int)xTile.Attribute("tileid");
 
 					var wangIdString = (string)xTile.Attribute("wangid");
-					tile.CornerTerrains = new Dictionary<string, string>();
-					var cornerValues = wangIdString.Split(',').Where((item, index) => index % 2 != 0).Select(i => Convert.ToInt32(i)).ToList();
-					List<string> corners = new List<string>() { "TopRight", "BottomRight", "BottomLeft", "TopLeft" };
-					for (int j = 0; j < cornerValues.Count; j++)
-					{
-						var corner = corners[j];
-						var terrainIndex = cornerValues[j];
+					tile.WangId = wangIdString.Split(',').ToList();
 
-						var terrainValue = terrainIndex <= 0 ? "None" : terrainSet.Terrains[terrainIndex - 1].Name;
+					//tile.CornerTerrains = new Dictionary<string, string>();
+					//var cornerValues = wangIdString.Split(',').Where((item, index) => index % 2 != 0).Select(i => Convert.ToInt32(i)).ToList();
+					//List<string> corners = new List<string>() { "TopRight", "BottomRight", "BottomLeft", "TopLeft" };
+					//for (int j = 0; j < cornerValues.Count; j++)
+					//{
+					//	var corner = corners[j];
+					//	var terrainIndex = cornerValues[j];
 
-						tile.CornerTerrains.Add(corner, terrainValue);
-					}
+					//	var terrainValue = terrainIndex <= 0 ? "None" : terrainSet.Terrains[terrainIndex - 1].Name;
+
+					//	tile.CornerTerrains.Add(corner, terrainValue);
+					//}
 
 					tiles.Add(tile);
 				}
